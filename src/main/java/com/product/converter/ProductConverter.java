@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import com.product.entityes.Product;
 import com.product.entityes.dto.ProductDto;
 
-
 @Component
 public class ProductConverter {
 
@@ -32,8 +31,7 @@ public class ProductConverter {
 		dto.setUpdateDate(product.getProductUpdateDate());
 		return dto;
 	}
-	
-	
+
 //	@Autowired
 //	public ModelMapper modelMapper;
 //

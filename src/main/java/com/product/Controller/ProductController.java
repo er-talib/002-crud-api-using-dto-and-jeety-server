@@ -29,7 +29,14 @@ public class ProductController {
 
 	@PostMapping("/details")
 	public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto dto) {
-		dto.setDate(new Date());
+//		dto.setDate(new Date());
+		
+		if (dto.getDate() == null) {
+			dto.setDate(new Date());
+		} else {
+			dto.setUpdateDate(new Date());
+		}
+		
 		ProductDto addProductDetails = this.productService.addProductDetails(dto);
 		return new ResponseEntity<ProductDto>(addProductDetails, HttpStatus.CREATED);
 	}
@@ -39,14 +46,14 @@ public class ProductController {
 //		dto.setUpdateDate(new Date());
 //		dto.setDate(new Date());
 
-		if (dto.getDate() == null) {
+		if (dto.getDate() != null) {
 			dto.setDate(new Date());
 		} else {
 			dto.setUpdateDate(new Date());
 		}
 		ProductDto updateProductDetails = this.productService.updateProductDetails(dto);
 		return new ResponseEntity<ProductDto>(updateProductDetails, HttpStatus.OK);
-	}
+	} 
 
 	@GetMapping("/details")
 	public ResponseEntity<List<ProductDto>> getAllProductDetails() {
@@ -61,9 +68,9 @@ public class ProductController {
 	}
 
 	@GetMapping("/details/{id}")
-	public ResponseEntity<ProductDto> getOneProductDetails(@PathVariable Integer id) {
-		ProductDto oneProductDetails = this.productService.getOneProductDetails(id.longValue());
-		if (oneProductDetails.getId() != id) {
+	public ResponseEntity<ProductDto> getOneProductDetails(@PathVariable long id) {
+		ProductDto oneProductDetails = this.productService.getOneProductDetails(id);
+		if (oneProductDetails != null) {
 			return new ResponseEntity<ProductDto>(oneProductDetails, HttpStatus.OK);
 		} else {
 
